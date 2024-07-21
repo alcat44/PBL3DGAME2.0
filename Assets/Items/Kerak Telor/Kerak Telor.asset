@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ed5fc72e80838438a47894dfa1cea3, type: 3}
-  m_Name: Lantern
+  m_Name: Kerak Telor
   m_EditorClassIdentifier: 
-  id: 2
-  itemName: Lantern
-  itemInformation: 
+  id: 10
+  itemName: Kerak Telor
+  itemInformation: Makanan Betawi
   icon: {fileID: 0}
-  prefab: {fileID: 2187816639353528781, guid: 3ede7744b835ff143aece1bdf6bc6070, type: 3}
+  prefab: {fileID: 5196800667008330416, guid: b36a1500bf8dca64c90dad349d29a6c3, type: 3}

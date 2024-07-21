@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0ed5fc72e80838438a47894dfa1cea3, type: 3}
-  m_Name: Brosur
+  m_Name: Baju3
   m_EditorClassIdentifier: 
-  id: 1
-  itemName: Brosur
-  itemInformation: 
-  icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  prefab: {fileID: 6383869044928301644, guid: 16cfda1add4ca3d4aabe6eec80200793, type: 3}
+  id: 5
+  itemName: Baju Adat
+  itemInformation: Tes
+  icon: {fileID: 0}
+  prefab: {fileID: 2883099671372200500, guid: d458eb53c81b263448be843439f25e84, type: 3}
