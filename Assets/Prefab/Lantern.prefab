@@ -44,8 +44,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 0.5019608, b: 0, a: 1}
-  m_Intensity: 6
-  m_Range: 2.18
+  m_Intensity: 1.5
+  m_Range: 58.7
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -104,15 +104,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 32f81edf11c6a1a48809cee7a7dc1342, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -54.92482
+      value: -76.33
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32f81edf11c6a1a48809cee7a7dc1342, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 10.061501
+      value: 33.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32f81edf11c6a1a48809cee7a7dc1342, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 26.38213
+      value: -7.92
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32f81edf11c6a1a48809cee7a7dc1342, type: 3}
       propertyPath: m_LocalRotation.w
@@ -120,15 +120,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32f81edf11c6a1a48809cee7a7dc1342, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32f81edf11c6a1a48809cee7a7dc1342, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32f81edf11c6a1a48809cee7a7dc1342, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 32f81edf11c6a1a48809cee7a7dc1342, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -245,12 +245,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: e5e575e05c702fa42a3cb348a7ed1d37, type: 2}
   pickupText: {fileID: 0}
-  itemObject: {fileID: 2187816639353528781}
   pickup: {fileID: 0}
-  inventoryManager: {fileID: 0}
+  Index: 0
   interactable: 0
-  itemPlacementTag: ItemPlacement
-  MainCameraTag: MainCamera
 --- !u!54 &4385391399475850445
 Rigidbody:
   m_ObjectHideFlags: 0

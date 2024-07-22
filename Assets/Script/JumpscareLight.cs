@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class JumpscareLight : MonoBehaviour
@@ -19,6 +18,7 @@ public class JumpscareLight : MonoBehaviour
             collision.enabled = false;
             TurnOffLight();
             PlayScareSound();
+            StartCoroutine(DisableJumpscareAfterDelay(15f)); // Memanggil Coroutine
         }
     }
 
@@ -40,5 +40,11 @@ public class JumpscareLight : MonoBehaviour
         {
             scareSound.Play();
         }
+    }
+
+    IEnumerator DisableJumpscareAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Jumpscare.SetActive(false); // Menghilangkan jumpscare setelah delay
     }
 }

@@ -8,6 +8,13 @@ public class dalammusik : MonoBehaviour
     public AudioSource audioSource;
     public GameObject light; // Referensi ke GameObject lampu
     public GameObject textObject; // Referensi ke GameObject teks
+    private Collider triggerCollider;
+
+    void Start()
+    {
+        // Menyimpan referensi ke collider
+        triggerCollider = GetComponent<Collider>();
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -52,13 +59,10 @@ public class dalammusik : MonoBehaviour
             textObject.SetActive(false);
         }
 
-        // Tunggu selama 1 detik
-        yield return new WaitForSeconds(1f);
-
-        // Nyalakan kembali lampu
-        if (light != null)
+        // Menghapus trigger collider setelah pemain mengenainya
+        if (triggerCollider != null)
         {
-            light.SetActive(true);
+            triggerCollider.enabled = false;
         }
     }
 }
