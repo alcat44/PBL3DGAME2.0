@@ -12,6 +12,10 @@ public class InstrumentController : MonoBehaviour
     public Animator rewardAnimator; // Animator untuk animasi reward
     public bool interactable; // Menandakan apakah objek dapat diinteraksi
     public AudioSource[] instrumentSounds; // Array untuk menyimpan AudioSource untuk setiap alat musik
+    public JumpscareReward jumpscare; // Skrip jumpscare
+    public GameObject light; // Lampu yang akan dihidupkan kembali
+    public Renderer lightBulb;
+    public Material onlight;
 
     private int currentInstrumentIndex = -1; // Indeks alat musik saat ini yang berada dalam jangkauan
     private List<int> playedInstruments = new List<int>(); // Daftar untuk menyimpan urutan instrumen yang dimainkan
@@ -21,6 +25,8 @@ public class InstrumentController : MonoBehaviour
         successText.SetActive(false); // Pastikan teks berhasil tidak muncul di awal
         failText.SetActive(false); // Pastikan teks salah tidak muncul di awal
         rewardObject.SetActive(false); // Pastikan objek reward tidak muncul di awal
+        jumpscare.Jumpscare.SetActive(false); // Pastikan jumpscare tidak muncul di awal
+        TurnOnLight(); // Pastikan lampu menyala di awal
     }
 
     void OnTriggerEnter(Collider other)
@@ -80,10 +86,6 @@ public class InstrumentController : MonoBehaviour
                 instrumentSounds[index].Play();
                 playedInstruments.Add(index);
                 CheckSequence();
-            }
-            else
-            {
-                Debug.LogWarning("Instrument sound is not assigned for index " + index);
             }
         }
     }
@@ -147,6 +149,27 @@ public class InstrumentController : MonoBehaviour
         if (rewardSound != null)
         {
             rewardSound.Play(); // Mainkan suara reward
+        }
+
+        // Aktifkan trigger jumpscare setelah reward muncul
+        jumpscare.ActivateJumpscareTrigger();
+        Invoke("TurnOnLightAfterReward", 2.0f); // Nyalakan lampu setelah 2 detik animasi reward
+    }
+
+    void TurnOnLightAfterReward()
+    {
+        TurnOnLight(); // Nyalakan lampu setelah 2 detik
+    }
+
+    void TurnOnLight()
+    {
+        if (light != null)
+        {
+            light.SetActive(true);
+            if (lightBulb != null && onlight != null)
+            {
+                lightBulb.material = onlight;
+            }
         }
     }
 }
