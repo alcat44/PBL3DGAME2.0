@@ -16,13 +16,14 @@ public class JumpscareLight : MonoBehaviour
         {
             Jumpscare.SetActive(true);
             collision.enabled = false;
-            TurnOffLight();
-            PlayScareSound();
-            StartCoroutine(DisableJumpscareAfterDelay(15f)); // Memanggil Coroutine
+            MatikanLampu();
+            MainkanSuaraTakut();
+            StartCoroutine(NonaktifkanJumpscareSetelahDelay(15f)); // Memanggil Coroutine
+            NonaktifkanTrigger();
         }
     }
 
-    void TurnOffLight()
+    void MatikanLampu()
     {
         if (light != null)
         {
@@ -34,7 +35,7 @@ public class JumpscareLight : MonoBehaviour
         }
     }
 
-    void PlayScareSound()
+    void MainkanSuaraTakut()
     {
         if (scareSound != null)
         {
@@ -42,9 +43,17 @@ public class JumpscareLight : MonoBehaviour
         }
     }
 
-    IEnumerator DisableJumpscareAfterDelay(float delay)
+    IEnumerator NonaktifkanJumpscareSetelahDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         Jumpscare.SetActive(false); // Menghilangkan jumpscare setelah delay
+    }
+
+    void NonaktifkanTrigger()
+    {
+        if (collision != null)
+        {
+            collision.enabled = false; // Menonaktifkan trigger
+        }
     }
 }

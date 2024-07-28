@@ -20,6 +20,10 @@ public class AINavigationall : MonoBehaviour
     public string deathScene;
     public Vector3 rayCastOffset;
 
+    // Tambahkan variabel untuk efek suara
+    public AudioClip chaseSound;
+    private AudioSource audioSource;
+
     void Start()
     {
         walking = true;
@@ -30,6 +34,9 @@ public class AINavigationall : MonoBehaviour
         {
             jumpscareCamera.gameObject.SetActive(false); // Nonaktifkan kamera jumpscare pada awalnya
         }
+
+        // Inisialisasi AudioSource
+        audioSource = GetComponent<AudioSource>();
     }
 
     void Update()
@@ -41,11 +48,21 @@ public class AINavigationall : MonoBehaviour
         {
             if (hit.collider.CompareTag("Player"))
             {
-                walking = false;
-                StopCoroutine("stayIdle");
-                StopCoroutine("chaseRoutine");
-                StartCoroutine("chaseRoutine");
-                chasing = true;
+                if (!chasing)
+                {
+                    chasing = true;
+                    walking = false;
+                    StopCoroutine("stayIdle");
+                    StopCoroutine("chaseRoutine");
+                    StartCoroutine("chaseRoutine");
+
+                    // Mainkan suara pengejaran
+                    if (chaseSound != null && audioSource != null)
+                    {
+                        audioSource.clip = chaseSound;
+                        audioSource.Play();
+                    }
+                }
             }
         }
 
@@ -61,6 +78,19 @@ public class AINavigationall : MonoBehaviour
                 StartCoroutine(deathRoutine());
                 chasing = false;
             }
+            else if (distance > 30)
+            {
+                chasing = false;
+                walking = true;
+                randNum = Random.Range(0, destinations.Count);
+                currentDest = destinations[randNum];
+
+                // Hentikan suara pengejaran jika jarak lebih dari 20 unit
+                if (audioSource != null && audioSource.isPlaying)
+                {
+                    audioSource.Stop();
+                }
+            }
         }
         else if (walking)
         {
@@ -74,6 +104,12 @@ public class AINavigationall : MonoBehaviour
                 StartCoroutine("stayIdle");
                 walking = false;
             }
+
+            // Hentikan suara pengejaran jika AI tidak dalam mode pengejaran
+            if (audioSource != null && audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
         }
     }
 
@@ -84,6 +120,12 @@ public class AINavigationall : MonoBehaviour
         walking = true;
         randNum = Random.Range(0, destinations.Count);
         currentDest = destinations[randNum];
+
+        // Hentikan suara pengejaran jika masih berjalan
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
     }
 
     IEnumerator chaseRoutine()
@@ -94,6 +136,12 @@ public class AINavigationall : MonoBehaviour
         chasing = false;
         randNum = Random.Range(0, destinations.Count);
         currentDest = destinations[randNum];
+
+        // Hentikan suara pengejaran jika masih berjalan
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
     }
 
     IEnumerator deathRoutine()
@@ -118,5 +166,11 @@ public class AINavigationall : MonoBehaviour
         currentDest = destinations[randNum];
         ai.destination = currentDest.position;
         ai.speed = walkSpeed;
+
+        // Hentikan suara pengejaran jika masih berjalan
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(AudioSource))]
 
 public class SC_FPSController : MonoBehaviour
 {
@@ -14,9 +15,13 @@ public class SC_FPSController : MonoBehaviour
     public float lookSpeed = 2.0f;
     public float lookXLimit = 45.0f;
 
-    CharacterController characterController;
-    Vector3 moveDirection = Vector3.zero;
-    float rotationX = 0;
+    public AudioClip walkingSound;
+    public AudioClip runningSound;
+
+    private CharacterController characterController;
+    private AudioSource audioSource;
+    private Vector3 moveDirection = Vector3.zero;
+    private float rotationX = 0;
 
     [HideInInspector]
     public bool canMove = true;
@@ -24,6 +29,7 @@ public class SC_FPSController : MonoBehaviour
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        audioSource = GetComponent<AudioSource>();
 
         // Lock cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -69,6 +75,35 @@ public class SC_FPSController : MonoBehaviour
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);
             playerCamera.transform.localRotation = Quaternion.Euler(rotationX, 0, 0);
             transform.rotation *= Quaternion.Euler(0, Input.GetAxis("Mouse X") * lookSpeed, 0);
+        }
+
+        // Handle sound effects
+        HandleMovementSound(curSpeedX, curSpeedY, isRunning);
+    }
+
+    void HandleMovementSound(float curSpeedX, float curSpeedY, bool isRunning)
+    {
+        if (characterController.isGrounded && (curSpeedX != 0 || curSpeedY != 0))
+        {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.clip = isRunning ? runningSound : walkingSound;
+                audioSource.Play();
+            }
+            else if (audioSource.clip == walkingSound && isRunning)
+            {
+                audioSource.clip = runningSound;
+                audioSource.Play();
+            }
+            else if (audioSource.clip == runningSound && !isRunning)
+            {
+                audioSource.clip = walkingSound;
+                audioSource.Play();
+            }
+        }
+        else if (audioSource.isPlaying)
+        {
+            audioSource.Stop();
         }
     }
 }

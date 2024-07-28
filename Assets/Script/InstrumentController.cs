@@ -19,6 +19,7 @@ public class InstrumentController : MonoBehaviour
 
     private int currentInstrumentIndex = -1; // Indeks alat musik saat ini yang berada dalam jangkauan
     private List<int> playedInstruments = new List<int>(); // Daftar untuk menyimpan urutan instrumen yang dimainkan
+    private bool isPlayingInstrument = false; // Menandakan apakah ada instrumen yang sedang dimainkan
 
     void Start()
     {
@@ -70,7 +71,7 @@ public class InstrumentController : MonoBehaviour
     {
         if (interactable && Input.GetKeyDown(KeyCode.E))
         {
-            if (currentInstrumentIndex != -1)
+            if (currentInstrumentIndex != -1 && !isPlayingInstrument)
             {
                 PlayInstrument(currentInstrumentIndex);
             }
@@ -81,13 +82,21 @@ public class InstrumentController : MonoBehaviour
     {
         if (index >= 0 && index < instrumentSounds.Length)
         {
-            if (instrumentSounds[index] != null)
+            if (instrumentSounds[index] != null && !instrumentSounds[index].isPlaying)
             {
                 instrumentSounds[index].Play();
                 playedInstruments.Add(index);
+                isPlayingInstrument = true;
+                StartCoroutine(WaitForInstrumentToFinish(instrumentSounds[index]));
                 CheckSequence();
             }
         }
+    }
+
+    IEnumerator WaitForInstrumentToFinish(AudioSource audioSource)
+    {
+        yield return new WaitWhile(() => audioSource.isPlaying);
+        isPlayingInstrument = false;
     }
 
     void CheckSequence()

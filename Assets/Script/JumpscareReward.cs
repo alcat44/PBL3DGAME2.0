@@ -11,6 +11,7 @@ public class JumpscareReward : MonoBehaviour
     public GameObject cutsceneCamera; // Kamera untuk cutscene
     public TextMeshProUGUI conversationText; // TextMeshPro untuk percakapan
     public GameObject rewardObject; // Game object yang akan diaktifkan setelah cutscene selesai
+    public MonoBehaviour playerMovementScript; // Script movement player
 
     void Start()
     {
@@ -27,6 +28,7 @@ public class JumpscareReward : MonoBehaviour
             Jumpscare.SetActive(true);
             collision.enabled = false; // Nonaktifkan collider setelah trigger
             PlayScareSound();
+            DisablePlayerMovement(); // Nonaktifkan movement player
             StartCoroutine(DisableJumpscareAndStartCutscene()); // Memanggil Coroutine untuk memulai cutscene dengan penundaan
         }
     }
@@ -36,6 +38,22 @@ public class JumpscareReward : MonoBehaviour
         if (scareSound != null)
         {
             scareSound.Play();
+        }
+    }
+
+    void DisablePlayerMovement()
+    {
+        if (playerMovementScript != null)
+        {
+            playerMovementScript.enabled = false; // Nonaktifkan script movement player
+        }
+    }
+
+    void EnablePlayerMovement()
+    {
+        if (playerMovementScript != null)
+        {
+            playerMovementScript.enabled = true; // Aktifkan kembali script movement player
         }
     }
 
@@ -84,6 +102,7 @@ public class JumpscareReward : MonoBehaviour
             mainCamera.gameObject.SetActive(true);
         }
 
+        EnablePlayerMovement(); // Aktifkan kembali movement player
         rewardObject.SetActive(true); // Aktifkan rewardObject setelah cutscene selesai
     }
 }
