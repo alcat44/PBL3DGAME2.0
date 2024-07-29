@@ -29,7 +29,7 @@ public class JumpscareReward : MonoBehaviour
             collision.enabled = false; // Nonaktifkan collider setelah trigger
             PlayScareSound();
             DisablePlayerMovement(); // Nonaktifkan movement player
-            StartCoroutine(DisableJumpscareAndStartCutscene()); // Memanggil Coroutine untuk memulai cutscene dengan penundaan
+            StartCoroutine(CutsceneCoroutine()); // Mulai cutscene dengan penundaan
         }
     }
 
@@ -57,13 +57,6 @@ public class JumpscareReward : MonoBehaviour
         }
     }
 
-    IEnumerator DisableJumpscareAndStartCutscene()
-    {
-        yield return new WaitForSeconds(5.0f); // Penundaan 5 detik sebelum cutscene
-        Jumpscare.SetActive(false); // Menghilangkan jumpscare
-        StartCoroutine(CutsceneCoroutine()); // Mulai cutscene setelah jumpscare
-    }
-
     // Fungsi untuk mengaktifkan collider jumpscare
     public void ActivateJumpscareTrigger()
     {
@@ -72,6 +65,8 @@ public class JumpscareReward : MonoBehaviour
 
     IEnumerator CutsceneCoroutine()
     {
+        yield return new WaitForSeconds(2.0f); // Penundaan 2 detik sebelum cutscene dimulai
+
         cutsceneCamera.SetActive(true); // Aktifkan kamera cutscene
 
         // Nonaktifkan kamera lain jika diperlukan
@@ -102,6 +97,7 @@ public class JumpscareReward : MonoBehaviour
             mainCamera.gameObject.SetActive(true);
         }
 
+        Jumpscare.SetActive(false); // Nonaktifkan jumpscare setelah cutscene selesai
         EnablePlayerMovement(); // Aktifkan kembali movement player
         rewardObject.SetActive(true); // Aktifkan rewardObject setelah cutscene selesai
     }

@@ -20,22 +20,18 @@ public class dalammusik : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            StartCoroutine(StopMediaAfterDelay(5f));
+            StartCoroutine(StopAudioAfterDelay(5f));
         }
     }
 
-    IEnumerator StopMediaAfterDelay(float delay)
+    IEnumerator StopAudioAfterDelay(float delay)
     {
-        // Hentikan audio dan video setelah delay
+        // Hentikan audio setelah delay
         yield return new WaitForSeconds(delay);
 
         if (audioSource != null)
         {
             audioSource.Stop();
-        }
-        if (videoPlayer != null)
-        {
-            videoPlayer.Stop();
         }
 
         // Matikan lampu
